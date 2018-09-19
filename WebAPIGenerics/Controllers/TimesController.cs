@@ -66,7 +66,7 @@ namespace WebAPIGenerics.Controllers
             t.TimeID = time.TimeID;
             t.Nome = time.Nome;
             
-            _context.SaveChanges();//
+            _context.SaveChanges();///*
             return Ok();
 
         }
