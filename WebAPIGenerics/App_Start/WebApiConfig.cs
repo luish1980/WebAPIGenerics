@@ -19,6 +19,12 @@ namespace WebAPIGenerics
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "ApiRoot1",
+                routeTemplate: "api/{controller}/{parameter}/{paramenter}",
+                defaults: new { }
+            );
         }
     }
 }
