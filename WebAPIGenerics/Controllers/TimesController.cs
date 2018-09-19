@@ -72,13 +72,17 @@ namespace WebAPIGenerics.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult Post(Time time)
         {
             Time t = new Time();
             t.Nome = time.Nome;
             
             _context.Times.Add(time);
+
+            _context.SaveChanges();
+
+            
 
             return Ok();
         }
@@ -92,6 +96,7 @@ namespace WebAPIGenerics.Controllers
                 return NotFound();
             }
             _context.Times.Remove(time);
+            _context.SaveChanges();
 
             return Ok();
         }
