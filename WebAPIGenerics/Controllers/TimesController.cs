@@ -2,13 +2,17 @@
 using System.Web.Http;
 using WebAPIGenerics.Models;
 using WebAPIGenerics.Utils;
+using WebAPIGenerics.Service;
+
+
 
 namespace WebAPIGenerics.Controllers
 {
     public class TimesController : ApiController
     {
-        Context _context = new Context();
-
+        Services<Time> _service = new Services<Time>();
+        Models.Context _context = new Models.Context();
+        
         //public TimesController(Context context)
         //{
         //    this._context = context;
@@ -17,16 +21,18 @@ namespace WebAPIGenerics.Controllers
         /// Retorna a lista de jogadores
         /// </summary>
         /// <returns></returns>
+        /// 
+
         [HttpGet]
         public IHttpActionResult Get()
         {
-            var model = _context.Times.ToList();
+            var model = _service.ListAll();
             return Ok(model);
         }
         [HttpGet]
         public IHttpActionResult Edit(int id)
         {
-            Time t = _context.Times.Where(x => x.TimeID == id).SingleOrDefault();
+            Time t = _service.findById(id);
             if (t == null)
             {
                 return NotFound();
@@ -65,7 +71,7 @@ namespace WebAPIGenerics.Controllers
             }
             t.TimeID = time.TimeID;
             t.Nome = time.Nome;
-            
+
             _context.SaveChanges();///
             return Ok();
 
@@ -77,12 +83,12 @@ namespace WebAPIGenerics.Controllers
         {
             Time t = new Time();
             t.Nome = time.Nome;
-            
+
             _context.Times.Add(time);
 
             _context.SaveChanges();
 
-            
+
 
             return Ok();
         }

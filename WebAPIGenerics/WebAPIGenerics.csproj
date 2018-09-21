@@ -264,6 +264,16 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebAPIGenerics.Entidade\WebAPIGenerics.Entidade.csproj">
+      <Project>{890509b2-c08a-4b25-912b-72478acf5e11}</Project>
+      <Name>WebAPIGenerics.Entidade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebAPIGenerics.Service\WebAPIGenerics.Service.csproj">
+      <Project>{ef3999ea-0c4c-455a-9453-864c5a386adb}</Project>
+      <Name>WebAPIGenerics.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
