@@ -9,7 +9,6 @@ namespace WebAPIGenerics.Controllers
     public class TimesController : ApiController
     {
         Services<Entidade.Time> _service = new Services<Entidade.Time>();
-        Models.Context _context = new Models.Context();
         
         [HttpGet]
         public IHttpActionResult Get()
