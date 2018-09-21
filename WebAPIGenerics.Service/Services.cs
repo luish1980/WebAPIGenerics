@@ -20,7 +20,9 @@ namespace WebAPIGenerics.Service
         {
             int skip = (pageSize - 1) * page;
             int total = c.Set<T>().Count();
-            var userFilterPaging = c.Set<T>()
+
+            //var records = from list in  select list;
+            var userFilterPaging = c.Set<T>().AsEnumerable<T>()
                 .Skip(skip)
                 .Take(page)
                 .ToList();
@@ -50,6 +52,11 @@ namespace WebAPIGenerics.Service
         {
             c.Set<T>().Remove(t);
             c.SaveChanges();
+        }
+
+        public int Count()
+        {
+            return c.Set<T>().Count();
         }
 
         

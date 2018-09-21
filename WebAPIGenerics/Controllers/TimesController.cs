@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using System.Web.Http;
-using WebAPIGenerics.Models;
-using WebAPIGenerics.Entidade;
 using WebAPIGenerics.Utils;
 using WebAPIGenerics.Service;
 
@@ -41,7 +39,7 @@ namespace WebAPIGenerics.Controllers
         public IHttpActionResult GetListWithPaging(int pageSize, int page)
         {
             int skip = (pageSize - 1) * page;
-            int total = _context.Times.Count();
+            int total = _service.Count();
             var userFilterPaging = _service.ListWithPaging(pageSize, page);
 
             return Ok(new Paginacao<Entidade.Time>(userFilterPaging, pageSize, page, total));
@@ -58,7 +56,6 @@ namespace WebAPIGenerics.Controllers
             }
             _service.update(t);///
             return Ok();
-
         }
 
 
@@ -81,7 +78,5 @@ namespace WebAPIGenerics.Controllers
 
             return Ok();
         }
-
-
     }
 }

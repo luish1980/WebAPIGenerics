@@ -21,7 +21,7 @@ namespace WebAPIGenerics
             );
 
             config.Routes.MapHttpRoute(
-                name: "ApiRoot1",
+                name: "RootListParameters",
                 routeTemplate: "api/{controller}/{parameter}/{paramenter}",
                 defaults: new { }
             );
