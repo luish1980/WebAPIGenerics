@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 using WebAPIGenerics.Utils;
 using WebAPIGenerics.Service;
 
@@ -54,7 +53,7 @@ namespace WebAPIGenerics.Controllers
             {
                 return NotFound();
             }
-            _service.update(t);///
+            _service.update(t);
             return Ok();
         }
 
