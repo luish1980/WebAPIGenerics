@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Http;
 using WebAPIGenerics.Models;
+using WebAPIGenerics.Entidade;
 using WebAPIGenerics.Utils;
 using WebAPIGenerics.Service;
 
@@ -10,19 +11,9 @@ namespace WebAPIGenerics.Controllers
 {
     public class TimesController : ApiController
     {
-        Services<Time> _service = new Services<Time>();
+        Services<Entidade.Time> _service = new Services<Entidade.Time>();
         Models.Context _context = new Models.Context();
         
-        //public TimesController(Context context)
-        //{
-        //    this._context = context;
-        //}
-        /// <summary>
-        /// Retorna a lista de jogadores
-        /// </summary>
-        /// <returns></returns>
-        /// 
-
         [HttpGet]
         public IHttpActionResult Get()
         {
@@ -32,7 +23,7 @@ namespace WebAPIGenerics.Controllers
         [HttpGet]
         public IHttpActionResult Edit(int id)
         {
-            Time t = _service.findById(id);
+            Entidade.Time t = _service.findById(id);
             if (t == null)
             {
                 return NotFound();
@@ -51,58 +42,42 @@ namespace WebAPIGenerics.Controllers
         {
             int skip = (pageSize - 1) * page;
             int total = _context.Times.Count();
-            var userFilterPaging = _context.Times
-                .OrderBy(c => c.TimeID)
-                .Skip(skip)
-                .Take(page)
-                .ToList();
+            var userFilterPaging = _service.ListWithPaging(pageSize, page);
 
-            return Ok(new Paginacao<Time>(userFilterPaging, pageSize, page, total));
+            return Ok(new Paginacao<Entidade.Time>(userFilterPaging, pageSize, page, total));
 
         }
 
         [HttpPut]
-        public IHttpActionResult EditById(Time time)
+        public IHttpActionResult EditById(Entidade.Time time)
         {
-            Time t = _context.Times.Where(x => x.TimeID == time.TimeID).SingleOrDefault();
+            Entidade.Time t = _service.findById(time.TimeID);
             if (t == null)
             {
                 return NotFound();
             }
-            t.TimeID = time.TimeID;
-            t.Nome = time.Nome;
-
-            _context.SaveChanges();///
+            _service.update(t);///
             return Ok();
 
         }
 
 
         [HttpPost]
-        public IHttpActionResult Post(Time time)
+        public IHttpActionResult Post(Entidade.Time time)
         {
-            Time t = new Time();
-            t.Nome = time.Nome;
-
-            _context.Times.Add(time);
-
-            _context.SaveChanges();
-
-
-
+            _service.save(time);
             return Ok();
         }
 
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            Time time = _context.Times.Where(x => x.TimeID == id).SingleOrDefault();
+            Entidade.Time time = _service.findById(id);
             if (time == null)
             {
                 return NotFound();
             }
-            _context.Times.Remove(time);
-            _context.SaveChanges();
+            _service.delete(time);
 
             return Ok();
         }

@@ -12,33 +12,46 @@ namespace WebAPIGenerics.Service
         Context c = new Context();
         public List<T> ListAll()
         {
-            var x = c.Set<T>().AsQueryable().ToList();
+            List<T> x = c.Set<T>().AsQueryable().ToList();
             return x;
         }
-        
-        public Services()
-        {
-        }
 
-        public void delete(int id)
+        public List<T> ListWithPaging(int pageSize, int page)
         {
-            
-        }
+            int skip = (pageSize - 1) * page;
+            int total = c.Set<T>().Count();
+            var userFilterPaging = c.Set<T>()
+                .Skip(skip)
+                .Take(page)
+                .ToList();
 
-        public void findByEntity(T entity)
-        {
-            throw new NotImplementedException();
+            return userFilterPaging;
         }
 
         public T findById(int id)
         {
-
-            throw new NotImplementedException();
+            T t = c.Set<T>().Find(id);
+            return t; 
         }
 
         public void save(T entity)
         {
-            throw new NotImplementedException();
+            c.Set<T>().Add(entity);
+            c.SaveChanges();
         }
+
+        public void update(T entity)
+        {
+            c.Entry(entity).State = EntityState.Modified;
+            c.SaveChanges();
+        }
+
+        public void delete(T t)
+        {
+            c.Set<T>().Remove(t);
+            c.SaveChanges();
+        }
+
+        
     }
 }

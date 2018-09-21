@@ -10,9 +10,9 @@ namespace WebAPIGenerics.Service
     {
         List<T> ListAll();
         T findById(int id);
-        void findByEntity(T entity);
-        void delete(int id);
+        void delete(T t);
         void save(T entity);
+        List<T> ListWithPaging(int pageSize, int page);
 
     }
 }
